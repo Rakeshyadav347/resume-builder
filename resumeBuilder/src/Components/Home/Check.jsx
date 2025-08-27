@@ -11,23 +11,25 @@ function Check(){
     </p>
 
     {/* Tabs */}
-    <div className="bg-gray-200 rounded-2xl flex p-1 mt-4 md:space-x-4 space-x-2 overflow-x-auto gap-3">
-      <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
-        Featured Articles
-      </button>
-      <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
-        Resume
-      </button>
-      <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
-        Cover Letter
-      </button>
-      <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
-        Interview
-      </button>
-      <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
-        Career
-      </button>
-    </div>
+    <div className="bg-gray-200 rounded-2xl p-2 mt-4 flex flex-wrap md:flex-nowrap md:space-x-4 space-x-2 overflow-x-auto gap-3 items-center justify-center">
+  <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
+    Featured Articles
+  </button>
+  <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
+    Resume
+  </button>
+  <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
+    Cover Letter
+  </button>
+  <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
+    Interview
+  </button>
+  <button className="px-4 py-2 rounded-2xl text-gray-600 hover:bg-white hover:shadow">
+    Career
+    </button>
+  
+</div>
+
   </div>
    <div className="min-h-screen bg-gray-50 py-10">
       {/* Container for all cards */}
@@ -39,7 +41,7 @@ function Check(){
           >
             {/* Image */}
             <img
-              src="\ResourcesPage_images\Frame 1000004069.png" // 👉 replace with your actual image path
+              src="\ResourcesPage_images\Frame 1000004069.png"
               alt="Resume Tips"
               className="w-full h-48 object-cover"
             />
