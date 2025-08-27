@@ -4,6 +4,8 @@ import Hero from "./Hero";
 import ResumePreview from "./ResumePreview";
 import ResumeSteps from "./ResumeSteps";
 import TemplateSection from "./TemplateSection";
+import Ats from "./Ats";
+import WhatWeCheck from "./WhatWeCheck";
 
 const Home = () => {
   return (
@@ -13,6 +15,8 @@ const Home = () => {
       <ResumePreview/>
       <ResumeSteps/>
       <TemplateSection/>
+      <Ats/>
+      <WhatWeCheck/>
     </>
   );
 };
