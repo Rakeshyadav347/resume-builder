@@ -3,12 +3,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Check from './Components/Home/Check'
-
+import ResourcesDetails from './Components/Home/ResourcesDetails'
 function App() {
   
   return (
     <>
-      <Check/>
+      {/* <Check/> */}
+      <ResourcesDetails/>
     </>
   )
 }
