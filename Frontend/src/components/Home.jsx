@@ -6,6 +6,7 @@ import ResumeSteps from "./ResumeSteps";
 import TemplateSection from "./TemplateSection";
 import Ats from "./Ats";
 import WhatWeCheck from "./WhatWeCheck";
+import Check from "./Check";
 
 const Home = () => {
   return (
