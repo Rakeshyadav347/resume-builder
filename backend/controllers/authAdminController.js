@@ -3,6 +3,7 @@ const Subscriptions = require('../models/subscriptionShema');
 const Feedback = require('../models/feedbackSchema');
 const Resume = require('../models/templateSchema');
 const blogs = require('../models/blogSchema');
+const Userauth = require('../models/Userauth')
 
 exports.getDesiredAdmin = async(req , res) =>{
      const {adminName , password}= req.body;
@@ -112,3 +113,32 @@ exports.getsingleblog = async(req, res) =>{
      
 
 }
+
+exports.blogsCount = async(req ,res )=>{
+      const countfeed  = await blogs.countDocuments({});
+      res.json(countfeed);
+} 
+exports.userCount = async(req ,res )=>{
+      const countfeed  = await Userauth.countDocuments({});
+      res.json(countfeed);
+} 
+exports.SubscriptionsCount = async(req ,res )=>{
+      const countfeed  = await Subscriptions.countDocuments({});
+      res.json(countfeed);
+} 
+exports.ResumeCount = async(req ,res )=>{
+      const countfeed  = await Resume.countDocuments({});
+      res.json(countfeed);
+} 
+
+exports.dsubscriptionCount = async(req ,res )=>{
+      const counts = await Subscriptions.aggregate([
+     {
+    $group: {
+      _id: "$subscriptionPlan",
+      total: { $sum: 1 }
+    }
+  }
+]);
+res.json(counts);
+} 
