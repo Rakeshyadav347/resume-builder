@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const authAdminSchema=mongoose.Schema(
    {
-    username:{
+    adminName:{
       type:String,
       required:true,
       unique:true,

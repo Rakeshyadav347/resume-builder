@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const authUserSchema=mongoose.Schema(
+const authUserSchema = mongoose.Schema(
    {
     username:{
       type:String,
@@ -11,8 +11,60 @@ const authUserSchema=mongoose.Schema(
        type:String,
       required:true,
       unique:true,
-    }
+    },
+    name:{
+      type:String,
+      required:true,
+
+    },
+    contact:{
+      type:Number,
+      required:true,
+    },
+    email:{
+      type:String,
+      requird:true,
+      unique:true,
+    },
+    country: {
+    type: String,
+    default: "India",
+  },
+  state: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  experience: {
+    type: Number, 
+  },
+  subscriptionExpiry: {
+    type: Date, 
+  },
+  planType: {
+    type: String,
+    enum: ["Basic", "Pro", "Premium"],
+    default: "Basic",
+  },
+  provider: {
+    type: String, 
+  },
+  activityLog: [activityLogSchema], 
    }
 )
 
-module.exports=mongoose.model("authAdmin",authUserSchema);
+const activityLogSchema = mongoose.Schema({
+  dateTime: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  action: {
+    type: String,
+    enum: ["Logged in", "Edited Resume", "Upgraded to Pro Plan"],
+    required: true,
+  },
+});
+
+module.exports=mongoose.model("Userauth",authUserSchema);
