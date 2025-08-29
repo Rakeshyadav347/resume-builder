@@ -7,9 +7,11 @@ adminLogRouter.post("/adminLog",authAdminController.getDesiredAdmin);
 adminLogRouter.post("/createadmin",authAdminController.createAdmin);
 adminLogRouter.get("/subscriptiondetails",authAdminController.userSubscriptions);
 adminLogRouter.get("/feedbacks",authAdminController.userFeedbacks);
-adminLogRouter.post("/singlefeedbacks/:userId",authAdminController.SingleFeedback);
-adminLogRouter.post("/singlesubscription/:userId",authAdminController.singleSubscription);
+adminLogRouter.post("/feedbacks/:userId",authAdminController.SingleFeedback);
+adminLogRouter.post("/subscriptiondetails/:userId",authAdminController.singleSubscription);
 adminLogRouter.get("/alltemplates",getAllTemplates);
 adminLogRouter.get("/singletemplate",getsingleTemplate);
 adminLogRouter.get("/allblogs",getAllblogs);
 adminLogRouter.get("/singleblog",getsingleblog);
+adminLogRouter.get("/templatecreation",createtemplate);
+
