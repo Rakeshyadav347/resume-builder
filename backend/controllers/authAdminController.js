@@ -86,6 +86,14 @@ exports.getsingleTemplate = async(req, res) =>{
      
 
 }
+exports.createtemplate = async(req , res) =>{
+      const{title ,tags, description , previewImage, templateFile ,sampleFile, isActive ,createdAt}  = req.body;
+      const tpcreation = new templatecreation({
+             title:title ,tags:tags , description :description, previewImage:previewImage, templateFile:templateFile ,sampleFile:sampleFile, isActive:isActive ,createdAt:createdAt,
+      })
+      await tpcreation.save();
+      res.json(tpcreation);
+}
 
 exports.getAllblogs = async (req ,res ) =>{
       const allblogs = await blogs.find({});
