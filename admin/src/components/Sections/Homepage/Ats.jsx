@@ -1,5 +1,5 @@
 import React from "react";
-import ats from "../../assets/ats.png";
+import ats from "../../../assets/ats.png";
 
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";

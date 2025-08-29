@@ -5,7 +5,7 @@ import {
   FaTwitter,
   FaLinkedinIn,
 } from "react-icons/fa";
-import logo from "../../assets/logo.png";
+import logo from "../../../assets/logo.png";
 const Footer = () => {
   return (
     <footer className="bg-[#050b18] text-white py-10 px-6 md:px-20">

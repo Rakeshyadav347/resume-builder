@@ -1,17 +1,17 @@
 import React from "react";
-import Navbar from "../Homepage/Navbar";
-import Footer from "../Homepage/Footer";
+import Navbar from "../Sections/Homepage/Navbar";
+import Footer from "../Sections/Homepage/Footer";
 
-import Hero from "../Homepage/Hero";
-import ResumePreview from "../Homepage/ResumePreview";
-import ResumeSteps from "../Homepage/ResumeSteps";
-import TemplateSection from "../Homepage/TemplateSection";
-import Ats from "../Homepage/Ats";
-import WhatWeCheck from "../Homepage/WhatWeCheck";
-import Blog from "../Homepage/Blog";
-import Pricing from "../Homepage/Pricing";
-import Testimonials from "../Homepage/Testimonials";
-import FAQ from "../Homepage/FAQ";
+import Hero from "../Sections/Homepage/Hero";
+import ResumePreview from "../Sections/Homepage/ResumePreview";
+import ResumeSteps from "../Sections/Homepage/ResumeSteps";
+import TemplateSection from "../Sections/Homepage/TemplateSection";
+import Ats from "../Sections/Homepage/Ats";
+import WhatWeCheck from "../Sections/Homepage/WhatWeCheck";
+import Blog from "../Sections/Homepage/Blog";
+import Pricing from "../Sections/Homepage/Pricing";
+import Testimonials from "../Sections/Homepage/Testimonials";
+import FAQ from "../Sections/Homepage/FAQ";
 
 const Home = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaCircle } from "react-icons/fa";
-import card from "../../assets/card-img.png";
+import card from "../../../assets/card-img.png";
 
 const Blog = () => {
   const blogs = [
