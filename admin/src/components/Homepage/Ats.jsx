@@ -1,5 +1,6 @@
 import React from "react";
-import ats from "../assets/ats.png";
+import ats from "../../assets/ats.png";
+
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 
@@ -37,7 +38,7 @@ const Ats = () => {
         </div>
 
         {/* Image Section */}
-        <div className="md:w-1/2 w-full flex justify-center">
+        <div className="md:w-1/2 w-full h- flex justify-center">
           <img
             src={ats}
             className="w-full max-w-md md:max-w-lg rounded-xl shadow-lg border border-gray-200"

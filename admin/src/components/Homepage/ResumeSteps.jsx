@@ -6,10 +6,10 @@ import {
   FaInfoCircle,
   FaDownload,
 } from "react-icons/fa";
-import step1Img from "../assets/login.png";
-import step2Img from "../assets/templates.png";
-import step3Img from "../assets/info.png";
-import step4Img from "../assets/ats.png";
+import step1Img from "../../assets/login.png";
+import step2Img from "../../assets/templates.png";
+import step3Img from "../../assets/info.png";
+import step4Img from "../../assets/ats.png";
 
 function ResumeSteps() {
   const steps = [

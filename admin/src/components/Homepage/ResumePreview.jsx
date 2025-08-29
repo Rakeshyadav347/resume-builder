@@ -1,4 +1,4 @@
-import preview from "../assets/resume.png";
+import preview from "../../assets/resume.png";
 
 function ResumePreview() {
   return (
