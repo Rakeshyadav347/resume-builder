@@ -4,12 +4,18 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Check from './Components/Home/Check'
 import ResourcesDetails from './Components/Home/ResourcesDetails'
+import Price from './Components/Home/Price'
+import FAQ from './Components/Home/Question'
+import Contact from './Components/Home/Contact'
 function App() {
   
   return (
     <>
       {/* <Check/> */}
-      <ResourcesDetails/>
+      {/* <ResourcesDetails/> */}
+      {/* <Price/> */}
+      <Contact></Contact>
+     
     </>
   )
 }
