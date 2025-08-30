@@ -52,7 +52,7 @@ const Pricing = () => {
   ];
 
   return (
-    <section className="py-16 bg-white text-center">
+    <section className="py-16 bg-white text-center mt-16">
       {/* Section Header */}
       <div className="mb-12">
         <span className="mx-auto text-center text-sm font-medium p-2 rounded-full bg-white text-blue-600 border border-blue-600 mb-4 block w-max">

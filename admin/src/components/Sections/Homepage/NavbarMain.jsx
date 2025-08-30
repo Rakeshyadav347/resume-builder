@@ -6,7 +6,7 @@ import userimg from "../../../assets/user-img.png";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
+  // const [resourcesOpen, setResourcesOpen] = useState(false);
 
   return (
     <nav className="w-full h-24 shadow-md bg-white fixed top-0 left-0 z-50">
@@ -34,7 +34,7 @@ function Navbar() {
                 Templates
               </Link>
             </li>
-
+{/* 
             <li className="relative">
               <button
                 onClick={() => setResourcesOpen(!resourcesOpen)}
@@ -43,8 +43,13 @@ function Navbar() {
                 Resources <FaChevronDown className="text-xs" />
               </button>
               {resourcesOpen && (
-                <ul className="absolute top-8 left-0 bg-white shadow-lg rounded-md p-3 w-40">
+                <ul className="absolute top-8 left-0 bg-white shadow-lg rounded-md p-3 w-40 "> */}
                   <li>
+                    <Link to="/resources" className="block hover:text-blue-500 ">
+                      Resources
+                    </Link>
+                  </li>
+                  {/* <li>
                     <Link
                       to="/resource-detail"
                       className="block hover:text-blue-500"
@@ -54,7 +59,7 @@ function Navbar() {
                   </li>
                 </ul>
               )}
-            </li>
+            </li> */}
 
             <li>
               <Link to="/pricing" className="hover:text-blue-500">
@@ -107,7 +112,14 @@ function Navbar() {
             </li>
 
             <li>
-              <button
+              <Link
+                to="/resources"
+                className="hover:text-blue-500"
+                onClick={() => setIsOpen(false)}
+              >
+               Resources
+              </Link>
+              {/* <button
                 onClick={() => setResourcesOpen(!resourcesOpen)}
                 className="flex items-center gap-1 hover:text-blue-500 w-full"
               >
@@ -125,7 +137,7 @@ function Navbar() {
                     </Link>
                   </li>
                 </ul>
-              )}
+              )} */}
             </li>
 
             <li>
