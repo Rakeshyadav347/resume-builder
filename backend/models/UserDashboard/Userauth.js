@@ -19,12 +19,13 @@ const authUserSchema = mongoose.Schema(
     },
     contact:{
       type:Number,
-      required:true,
+      
     },
     email:{
       type:String,
       requird:true,
       unique:true,
+      lowercase: true,
     },
     country: {
     type: String,
