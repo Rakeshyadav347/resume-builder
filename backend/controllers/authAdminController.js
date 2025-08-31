@@ -1,18 +1,18 @@
-const authAdmin = require('../models/authAdmin');
-const Subscriptions = require('../models/subscriptionShema');
-const Feedback = require('../models/feedbackSchema');
-const Resume = require('../models/templateSchema');
-const blogs = require('../models/blogSchema');
-const Userauth = require('../models/Userauth')
+const authAdmin = require('../models/AdminDashboard/authAdmin');
+const Subscriptions = require('../models/AdminDashboard/subscriptionShema');
+const Feedback = require('../models/AdminDashboard/feedbackSchema');
+const Resume = require('../models/AdminDashboard/templateSchema');
+const blogs = require('../models/AdminDashboard/blogSchema');
+const Userauth = require('../models/UserDashboard/Userauth')
 
 exports.getDesiredAdmin = async(req , res) =>{
      const {adminName , password}= req.body;
      const adminUser = authAdmin.findone({adminName : adminName , password:password} );
 
-      if (adminName  !== adminName.username) {
+      if (adminName  !== adminUser.adminName) {
        return res.status(401).json({ message: "Invalid credentials" });
       }
-      if(adminName  !== adminName.password){
+      if(adminName  !== adminUser.password){
       return res.status(401).json({ message: "Invalid credentials" });
       }
      res.json({id:adminUser._id,adminName :adminUser.adminName });
