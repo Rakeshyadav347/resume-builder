@@ -1,8 +1,10 @@
 import React from "react";
 import Stepper from "./personal_info";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 function CertificateForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -91,12 +93,14 @@ function CertificateForm() {
           {/* Navigation Buttons */}
           <div className="flex justify-between pt-6">
             <button
+              onClick={()=>navigate("/education")}
               type="button"
               className="border px-4 py-2 rounded-lg hover:bg-gray-100"
             >
               Previous
             </button>
             <button
+            onClick={()=>navigate("/skills")}
               type="submit"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
             >

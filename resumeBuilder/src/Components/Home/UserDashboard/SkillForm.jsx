@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Stepper from "./personal_info";
 import { useForm } from "react-hook-form";
-
+import { Navigate, useNavigate } from "react-router-dom";
 function SkillForm() {
+  const navigate = useNavigate();
   const [skills, setSkills] = useState([]);
 
   const {
@@ -99,10 +100,14 @@ function SkillForm() {
 
           {/* Buttons */}
           <div className="flex justify-between mt-6">
-            <button type="button" className="px-4 py-2 border rounded-lg">
+            <button
+            onClick={()=>navigate('/certificate')} 
+            type="button" className="px-4 py-2 border rounded-lg">
               Previous
             </button>
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+            <button
+             onClick={()=>navigate('/summary')} 
+             type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg">
               Next
             </button>
           </div>

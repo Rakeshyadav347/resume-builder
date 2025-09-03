@@ -1,7 +1,8 @@
-import React from "react";
+import React, { use } from "react";
 import { useForm } from "react-hook-form";
-
-function SummaryObjective({ onNext, onPrevious, onSkip }) {
+import { Navigate, useNavigate } from "react-router-dom";
+function SummaryObjective() {
+const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -9,7 +10,7 @@ function SummaryObjective({ onNext, onPrevious, onSkip }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    onNext(data.summary); // Pass summary value to parent
+    console.log(data); 
   };
 
   return (
@@ -20,7 +21,6 @@ function SummaryObjective({ onNext, onPrevious, onSkip }) {
           <h2 className="text-xl font-semibold">Summary Objective</h2>
           <button
             type="button"
-            onClick={onSkip}
             className="text-blue-500 hover:underline text-sm"
           >
             Skip
@@ -42,20 +42,18 @@ function SummaryObjective({ onNext, onPrevious, onSkip }) {
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-2"
             rows={5}
           />
-          {errors.summary && (
-            <p className="text-red-500 text-sm mb-4">{errors.summary.message}</p>
-          )}
 
           {/* Buttons */}
           <div className="flex justify-between mt-4">
             <button
+              onClick={()=>navigate('/skills')}
               type="button"
-              onClick={onPrevious}
               className="px-6 py-2 border rounded-lg hover:bg-gray-100"
             >
               Previous
             </button>
             <button
+             onClick={()=>navigate('/project')} 
               type="submit"
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >

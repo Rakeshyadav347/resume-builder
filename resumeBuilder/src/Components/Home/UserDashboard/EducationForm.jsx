@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import Stepper from "./personal_info";
 import { useForm } from "react-hook-form";
+import { Link } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+
+
 export default function EducationForm() {
 
+
+  const navigate = useNavigate();
 
   const {
       register,
@@ -123,13 +130,19 @@ export default function EducationForm() {
 
       {/* Navigation Buttons */}
       <div className="flex justify-between">
-        <button className="px-6 py-2 border border-gray-400 rounded-md">
+        
+        <button
+        onClick={() => navigate("/personal-info")}
+         className="px-6 py-2 border border-gray-400 rounded-md">
           Previous
         </button>
-        <button type="submit"  className="px-6 py-2 bg-blue-600 text-white rounded-md shadow-md">
+        <button 
+        onClick={() => navigate("/certificate")}
+         type="submit"  className="px-6 py-2 bg-blue-600 text-white rounded-md shadow-md">
           Next
         </button>
       </div>
+      
     </div>
 
 

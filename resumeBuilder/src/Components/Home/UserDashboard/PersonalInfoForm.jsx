@@ -1,7 +1,7 @@
 import React from "react";
 import Stepper from "./personal_info";
 import { useForm } from "react-hook-form";
-
+import { Link } from "react-router-dom";
 function PersonalInfoForm() {
   // ✅ Hooks must be inside the component
   const {
@@ -106,7 +106,9 @@ function PersonalInfoForm() {
         {/* Navigation Buttons */}
         <div className="flex justify-between mt-8">
           <button className="border rounded-lg px-4 py-2 bg-gray-100">Previous</button>
+          <Link to="/education"> 
           <button type="submit" className="border rounded-lg px-4 py-2 bg-blue-600 text-white">Next</button>
+          </Link>
         </div>
           </form>
       </div>
