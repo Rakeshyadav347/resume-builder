@@ -1,61 +1,7 @@
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
 
-const authUserSchema = mongoose.Schema(
-   {
-    username:{
-      type:String,
-      required:true,
-      unique:true,
-    },
-    password:{
-       type:String,
-      required:true,
-      unique:true,
-    },
-    name:{
-      type:String,
-      required:true,
 
-    },
-    contact:{
-      type:Number,
-      
-    },
-    email:{
-      type:String,
-      requird:true,
-      unique:true,
-      lowercase: true,
-    },
-    country: {
-    type: String,
-    default: "India",
-  },
-  state: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  experience: {
-    type: Number, 
-  },
-  subscriptionExpiry: {
-    type: Date, 
-  },
-  planType: {
-    type: String,
-    enum: ["Basic", "Pro", "Premium"],
-    default: "Basic",
-  },
-  provider: {
-    type: String, 
-  },
-  activityLog: [activityLogSchema], 
-   }
-)
-
-const activityLogSchema = mongoose.Schema({
+const activityLogSchema = new mongoose.Schema({
   dateTime: {
     type: Date,
     required: true,
@@ -68,4 +14,79 @@ const activityLogSchema = mongoose.Schema({
   },
 });
 
-module.exports=mongoose.model("Userauth",authUserSchema);
+
+const authUserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    unique: true,
+    sparse: true, 
+  },
+
+  password: {
+    type: String,
+    required: function () {
+      return this.provider === "local"; 
+    },
+  },
+
+  Image:{
+     type:String,
+  },
+
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true, 
+  },
+
+  name: {
+    type: String,
+    required: true,
+  },
+
+  contact: {
+    type: Number,
+  },
+
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+  },
+
+  country: {
+    type: String,
+    default: "India",
+  },
+  state: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+
+  experience: {
+    type: Number,
+  },
+
+  subscriptionExpiry: {
+    type: Date,
+  },
+
+  planType: {
+    type: String,
+    enum: ["Basic", "Pro", "Premium"],
+    default: "Basic",
+  },
+
+  provider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
+  },
+
+  activityLog: [activityLogSchema],
+});
+
+module.exports = mongoose.model("Userauth", authUserSchema);

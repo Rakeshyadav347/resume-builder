@@ -1,6 +1,8 @@
 const Userauth = require('../models/UserDashboard/Userauth');
 const Resume = require('../models/UserDashboard/ResumeSchema');
-
+const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const { oauth2Client } = require('../utils/googleClient');
 
 exports.getDesiredNuser = async (req ,res) =>{
   const {username , password}= req.body;
@@ -218,6 +220,42 @@ exports.deleteResume = async (req, res) => {
     }
 };
 
+
+exports.googleAuth = async (req, res) => {
+    const code = req.query.code;
+    try {
+        const googleRes = await oauth2Client.getToken(code);
+        oauth2Client.setCredentials(googleRes.tokens);
+        const userRes = await axios.get(
+            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+        );
+        const { email, name, picture } = userRes.data;
+        
+        let user = await Userauth.findOne({ email });
+
+        if (!user) {
+            user = await Userauth.create({
+                name,
+                email,
+                image: picture,
+            });
+        }
+        const { _id } = user;
+        const token = jwt.sign({ _id, email },
+            process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_TIMEOUT,
+        });
+        res.status(200).json({
+            message: 'success',
+            token,
+            user,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Internal Server Error"
+        })
+    }
+};
 
 
 

@@ -11,6 +11,9 @@ const subscriptionSchema = new mongoose.Schema({
     enum: ["Free", "Basic", "Pro"], 
     required: true 
   },
+  paymentId: { 
+    type: String 
+  } ,
   price: {
      type: Number,
       default: 0 
