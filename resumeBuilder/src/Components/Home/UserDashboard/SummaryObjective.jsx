@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
+import Stepper from "./personal_info";
 function SummaryObjective() {
 const navigate = useNavigate();
   const {
@@ -14,6 +15,8 @@ const navigate = useNavigate();
   };
 
   return (
+    <>
+    <Stepper></Stepper>
     <div className="w-full min-h-screen flex justify-center items-center bg-gray-50">
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-2xl">
         {/* Header */}
@@ -22,7 +25,7 @@ const navigate = useNavigate();
           <button
             type="button"
             className="text-blue-500 hover:underline text-sm"
-          >
+            >
             Skip
           </button>
         </div>
@@ -41,7 +44,7 @@ const navigate = useNavigate();
             placeholder="eg. A passionate frontend developer with expertise in React and Next.js..."
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-2"
             rows={5}
-          />
+            />
 
           {/* Buttons */}
           <div className="flex justify-between mt-4">
@@ -49,20 +52,21 @@ const navigate = useNavigate();
               onClick={()=>navigate('/skills')}
               type="button"
               className="px-6 py-2 border rounded-lg hover:bg-gray-100"
-            >
+              >
               Previous
             </button>
             <button
              onClick={()=>navigate('/project')} 
-              type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
+             type="submit"
+             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+             >
               Next
             </button>
           </div>
         </form>
       </div>
     </div>
+              </>
   );
 }
 
