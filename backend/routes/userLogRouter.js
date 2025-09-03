@@ -2,6 +2,8 @@ const express = require('express');
 const { getDesiredNuser,createUser,updateUser, deleteUser, createResume, getUserResumes, getResumeById , updateResume,deleteResume} = require('../controllers/authUserController');
 const userLogRouter=express.Router();
 
+
+userLogRouter.get("/google",googleAuth);
 userLogRouter.post("/userLog",getDesiredNuser);
 userLogRouter.post("/createuser",createUser);
 userLogRouter.put("/updateuser",updateUser);
