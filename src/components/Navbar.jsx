@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import React from "react";
-import logo from "../assets/logo.png"; // put your logo image in /src/assets/ and name it logo.png
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   return (
