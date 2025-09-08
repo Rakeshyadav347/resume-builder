@@ -31,5 +31,5 @@ const templatecreationSchema = new mongoose.Schema({
     }      
 });
 
-module.exports = mongoose.model("templatecreation", templatecreationSchema);
+module.exports = mongoose.model("templatecreations", templatecreationSchema);
 

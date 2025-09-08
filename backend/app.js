@@ -5,6 +5,7 @@ const cors = require('cors');
 require('dotenv').config();   
 
 const adminLogRouter = require("../backend/routes/adminLogRouter");
+const userLogRouter = require("../backend/routes/userLogRouter");
 
 const app = express();
 
@@ -12,8 +13,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/auth",adminLogRouter);
-app.use("/api/auth",userLogRouter);
+app.use("/api/adminauth",adminLogRouter);
+app.use("/api/userauth",userLogRouter);
 
 
 const PORT = process.env.PORT || 4000;
