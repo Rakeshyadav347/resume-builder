@@ -30,6 +30,9 @@ import SkillForm from "./components/Sections/UserDashboard/SkillForm";
 import Project from "./components/Sections/UserDashboard/Project";
 import SummaryObjective from "./components/Sections/UserDashboard/SummaryObjective";
 
+
+
+
 function App() {
   return (
     <Router>
@@ -57,9 +60,9 @@ function App() {
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/certificate-form" element={<CertificateForm />} />
-        <Route path="/education-form" element={<EducationForm />} />
-        <Route path="/login-as" element={<LoginAs />} />
+        <Route path="/certificate" element={<CertificateForm />} />
+        <Route path="/education" element={<EducationForm />} />
+        <Route path="/login-as" element={<LoginAs />} /> 
         <Route path="/personal-info-form" element={<PersonalInfoForm />} />
         <Route path="/project" element={<Project />} />
         <Route path="/stepper" element={<Stepper />} />
