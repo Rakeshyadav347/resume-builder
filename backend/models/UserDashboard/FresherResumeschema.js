@@ -83,4 +83,4 @@ const resumeSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model("ExpResume", resumeSchema);
+module.exports = mongoose.model("fresherResume", resumeSchema);

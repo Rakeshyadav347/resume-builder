@@ -9,17 +9,19 @@ const activityLogSchema = new mongoose.Schema({
   },
   action: {
     type: String,
-    enum: ["Logged in", "Edited Resume", "Upgraded to Pro Plan"],
+    enum: ["Logged in", "Edited Resume", "Upgraded to Pro Plan","Profile Updated"],
     required: true,
+    default:"Logged in",
   },
 });
 
 
 const authUserSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
+    required: true,
     unique: true,
-    sparse: true, 
+    lowercase: true,
   },
 
   password: {
@@ -28,6 +30,8 @@ const authUserSchema = new mongoose.Schema({
       return this.provider === "local"; 
     },
   },
+  otp: String,
+  otpExpires: Date,
 
   Image:{
      type:String,
@@ -39,7 +43,7 @@ const authUserSchema = new mongoose.Schema({
     sparse: true, 
   },
 
-  name: {
+  username: {
     type: String,
     required: true,
   },
@@ -48,12 +52,6 @@ const authUserSchema = new mongoose.Schema({
     type: Number,
   },
 
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-  },
 
   country: {
     type: String,

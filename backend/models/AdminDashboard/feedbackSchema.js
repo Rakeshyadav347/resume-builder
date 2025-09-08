@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const feedbackSchema = new mongoose.Schema({
   feedbackId: {
-     type: Number,
-      required: true,
-       unique: true
+      type: mongoose.Schema.Types.ObjectId,
+    ref: "Userauth",   
+    required: true
        },  
   name: {
      type: String,
