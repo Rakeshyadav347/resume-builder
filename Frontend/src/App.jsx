@@ -29,9 +29,8 @@ import PersonalInfoForm from "./components/Sections/UserDashboard/PersonalInfo";
 import SkillForm from "./components/Sections/UserDashboard/SkillForm";
 import Project from "./components/Sections/UserDashboard/Project";
 import SummaryObjective from "./components/Sections/UserDashboard/SummaryObjective";
-
-
-
+import ResumeForm from "./components/Sections/UserDashboard/ActualResume";
+import ActualResumePreview from "./components/Sections/UserDashboard/ResumePreview";
 
 function App() {
   return (
@@ -62,12 +61,17 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/certificate" element={<CertificateForm />} />
         <Route path="/education" element={<EducationForm />} />
-        <Route path="/login-as" element={<LoginAs />} /> 
+        <Route path="/login-as" element={<LoginAs />} />
         <Route path="/personal-info-form" element={<PersonalInfoForm />} />
         <Route path="/project" element={<Project />} />
         <Route path="/stepper" element={<Stepper />} />
-        <Route path="/summary-objective" element={<SummaryObjective />} />
-        <Route path="/skill-form" element={<SkillForm />} />
+        <Route path="/summary" element={<SummaryObjective />} />
+        <Route path="/skills" element={<SkillForm />} />
+        <Route path="/actualresume" element={<ResumeForm />} />
+        <Route
+          path="/actualresumepreview/:id"
+          element={<ActualResumePreview />}
+        />
       </Routes>
     </Router>
   );

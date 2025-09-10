@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3004/api/auth/";
+const BASE_URL = "http://localhost:3004/api/userauth/";
 const ADMIN_BASE_URL = "http://localhost:3004/api/adminauth/";
 
 export const googleAuth = async (code) => {
@@ -35,8 +35,16 @@ export const loginUser = async (data) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return response.json();
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "Login failed");
+  }
+
+  return result;
 };
+
 
 
 export const updateUser = async (token, formData) => {
@@ -105,11 +113,21 @@ export const createFeedback = async (token, data) => {
 export const createResume = async (token, data) => {
   const response = await fetch(`${BASE_URL}userLog/createResume`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { 
+      "Content-Type": "application/json",   
+      Authorization: `Bearer ${token}` 
+    },
     body: JSON.stringify(data),
   });
-  return response.json();
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "failed to create resume");
+  }
+
+  return result;
 };
+
 
 export const getAllResumes = async (token) => {
   const response = await fetch(`${BASE_URL}userLog/allResumes`, {
@@ -127,7 +145,13 @@ export const getResumeById = async (token, resumeId) => {
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return response.json();
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "failed to fetch resume");
+  }
+
+  return result;
 };
 
 export const updateResume = async (token, resumeId, data) => {
