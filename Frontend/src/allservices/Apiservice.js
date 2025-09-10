@@ -1,5 +1,6 @@
-const BASE_URL = "http://localhost:3004/api/userauth/";
-const ADMIN_BASE_URL = "http://localhost:3004/api/adminauth/";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL + "/api/userauth/";
+
+const ADMIN_BASE_URL = import.meta.env.VITE_BACKEND_URL + "/api/adminauth/";
 
 export const googleAuth = async (code) => {
   try {
