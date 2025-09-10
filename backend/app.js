@@ -11,7 +11,12 @@ const app = express();
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:process.env.FRONTEND_URL,
+  credentials:true,
+  methods:['GET', 'POST' , 'PUT' ,'DELETE' ,'OPTIONS'],
+  allowedHeaders:['Content_Type', 'Authoriztion']
+}));
 
 app.use("/api/adminauth",adminLogRouter);
 app.use("/api/userauth",userLogRouter);

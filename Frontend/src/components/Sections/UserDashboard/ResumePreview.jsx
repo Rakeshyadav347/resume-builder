@@ -20,10 +20,10 @@ export default function ActualResumePreview() {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        const token = localStorage.getItem("token"); // get token from storage
+        const token = localStorage.getItem("token");
         const res = await getResumeById(token, resumeId);
         setResume(res.data);
-        console.log(res.data); // backend sends { message, data }
+        console.log(res.data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -40,16 +40,13 @@ export default function ActualResumePreview() {
   const downloadPDF = async () => {
     const element = resumeRef.current;
 
-    // Take snapshot of resume
     const canvas = await html2canvas(element, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
 
-    // Create PDF
     const pdf = new jsPDF("p", "mm", "a4");
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    // Resize image to fit A4
     const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pageWidth;
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
