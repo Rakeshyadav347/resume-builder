@@ -1,11 +1,12 @@
 import React from "react";
 import UserNavbar from "./UserNavbar";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Choose() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[#f3f5fc] flex flex-col">
-      <UserNavbar/>
+      <UserNavbar />
 
       {/* Main Section */}
       <main className="flex flex-col items-center justify-center flex-grow px-4 py-12">
@@ -17,20 +18,19 @@ export default function Choose() {
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
           {/* CV Card */}
-          <div className="bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer hover:shadow-lg transition">
+          <button className="bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer hover:shadow-lg transition">
             <h3 className="text-2xl font-semibold mb-2">CV</h3>
-            <p className="text-gray-600">
-              Highlight Your Potential with a CV
-            </p>
-          </div>
+            <p className="text-gray-600">Highlight Your Potential with a CV</p>
+          </button>
 
           {/* Resume Card */}
-          <div className="bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer hover:shadow-lg transition">
+          <button
+            onClick={() => navigate("/actualresume")}
+            className="bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer hover:shadow-lg transition"
+          >
             <h3 className="text-2xl font-semibold mb-2">Resume</h3>
-            <p className="text-gray-600">
-              Start Your Journey with Confidence
-            </p>
-          </div>
+            <p className="text-gray-600">Start Your Journey with Confidence</p>
+          </button>
         </div>
       </main>
     </div>

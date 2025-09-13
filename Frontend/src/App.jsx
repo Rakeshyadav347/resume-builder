@@ -62,7 +62,7 @@ function App() {
         <Route path="/certificate" element={<CertificateForm />} />
         <Route path="/education" element={<EducationForm />} />
         <Route path="/login-as" element={<LoginAs />} />
-        <Route path="/personal-info-form" element={<PersonalInfoForm />} />
+        <Route path="/personal-info" element={<PersonalInfoForm />} />
         <Route path="/project" element={<Project />} />
         <Route path="/stepper" element={<Stepper />} />
         <Route path="/summary" element={<SummaryObjective />} />
