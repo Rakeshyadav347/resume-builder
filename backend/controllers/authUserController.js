@@ -350,11 +350,17 @@ exports.googleAuth = async (req, res) => {
 
         if (!user) {
             user = await Userauth.create({
-                name,
-                email,
-                image: picture,
+              username: name,
+              email,
+              Image: picture,
+              provider: "google",
+              googleId: userRes.data.id,
             });
-        }
+                }else if (user.provider === "local" && !user.googleId) {
+                  user.googleId = userRes.data.id;
+                  user.provider = "google";
+                  await user.save();
+}
         const { _id } = user;
         const token = jwt.sign({ _id, email },
             process.env.JWT_SECRET, {
