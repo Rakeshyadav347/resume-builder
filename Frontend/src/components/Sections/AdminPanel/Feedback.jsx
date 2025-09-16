@@ -1,66 +1,36 @@
 // src/components/Feedback.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
-
-const feedbacks = [
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "+91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "+91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-  {
-    id: "00001",
-    name: "Rosie Pearson",
-    contact: "91 90991 34329",
-    email: "Rose@gmail.com",
-  },
-];
+import { getAllFeedbacks } from "../../../allservices/Apiservice";
 
 const Feedback = () => {
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
+
+  const token = localStorage.getItem("adminToken");
+
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      try {
+        const data = await getAllFeedbacks(token);
+        if (Array.isArray(data)) {
+          setFeedbacks(data);
+        } else {
+          setFeedbacks([]);
+        }
+      } catch (err) {
+        console.error("❌ Error fetching feedbacks:", err);
+        setFeedbacks([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) fetchFeedbacks();
+  }, [token]);
+
+  if (loading) return <p>Loading feedbacks...</p>;
 
   return (
     <div className="p-6">
@@ -90,25 +60,31 @@ const Feedback = () => {
             </tr>
           </thead>
           <tbody>
-            {feedbacks.map((f) => (
-              <tr
-                key={f.id}
-                className="border-t hover:bg-black-50 transition cursor-pointer"
-                 onClick={() => setSelected(f)} //  whole row clickable
-              >
-                <td className="px-6 py-3 text-sm">{f.id}</td>
-                <td className="px-6 py-3 text-sm">{f.name}</td>
-                <td className="px-6 py-3 text-sm">{f.contact}</td>
-                <td className="px-6 py-3 text-sm">{f.email}</td>
-                <td className="px-6 py-3 text-center">
-                  <button
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    <FaEye />
-                  </button>
+            {feedbacks.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center text-gray-500 py-4">
+                  No feedbacks found.
                 </td>
               </tr>
-            ))}
+            ) : (
+              feedbacks.map((f) => (
+                <tr
+                  key={f._id}
+                  className="border-t hover:bg-gray-50 transition cursor-pointer"
+                  onClick={() => setSelected(f)}
+                >
+                  <td className="px-6 py-3 text-sm">{f._id}</td>
+                  <td className="px-6 py-3 text-sm">{f.name}</td>
+                  <td className="px-6 py-3 text-sm">{f.contact}</td>
+                  <td className="px-6 py-3 text-sm">{f.email}</td>
+                  <td className="px-6 py-3 text-center">
+                    <button className="text-blue-600 hover:text-blue-800">
+                      <FaEye />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -127,25 +103,25 @@ const Feedback = () => {
               </button>
             </div>
 
-             {/* Two-column layout for details */}
+            {/* Two-column layout for details */}
+            <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
+              <p className="font-semibold text-gray-600">ID</p>
+              <p>{selected._id}</p>
 
-             <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
-        <p className="font-semibold text-gray-600">ID</p>
-        <p>45</p>
+              <p className="font-semibold text-gray-600">Name</p>
+              <p>{selected.name}</p>
 
-         <p className="font-semibold text-gray-600">Name</p>
-        <p>Ravish</p>
+              <p className="font-semibold text-gray-600">Email</p>
+              <p>{selected.email}</p>
 
-        <p className="font-semibold text-gray-600">Email</p>
-        <p>abc@gmail.com</p>
+              <p className="font-semibold text-gray-600">Contact</p>
+              <p>{selected.contact}</p>
 
-        <p className="font-semibold text-gray-600">Contact</p>
-        <p>+91 43874 34893</p>
-
-        <p className="font-semibold text-gray-600">Message</p>
-        <p className="text-gray-700">dclkxjdkxj dsgkjdgksdjgkjdg sd;gjdg jdkjgdk jdkjgdkjd kgdkjgk djg kdjgkjdg</p>
-        </div>
-            
+              <p className="font-semibold text-gray-600">Message</p>
+              <p className="text-gray-700">
+                {selected.message || "No message provided"}
+              </p>
+            </div>
           </div>
         </div>
       )}

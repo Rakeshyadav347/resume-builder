@@ -258,7 +258,7 @@ exports.createBlog = async (req, res) => {
 
 exports.getAllblogs = async (req, res) => {
   try {
-    const allblogs = await blogs.find({});
+    const allblogs = await blogs.find({}).sort({ createdAt: -1 }); 
     if (allblogs.length > 0) {
       res.status(200).json(allblogs);
     } else {
@@ -268,6 +268,7 @@ exports.getAllblogs = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 
 

@@ -32,6 +32,7 @@ const authUserSchema = new mongoose.Schema({
   },
   otp: String,
   otpExpires: Date,
+  otpVerified: { type: Boolean, default: false },
 
   Image:{
      type:String,

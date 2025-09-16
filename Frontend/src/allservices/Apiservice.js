@@ -75,6 +75,15 @@ export const forgotPassword = async (data) => {
   return response.json();
 };
 
+export const verifyOtp = async (data) => {
+  const response = await fetch(`${BASE_URL}verify-otp`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};
+
 export const resetPassword = async (data) => {
   const response = await fetch(`${BASE_URL}reset-password`, {
     method: "POST",
@@ -276,7 +285,11 @@ export const getAllBlogs = async (token) => {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch blogs: ${response.status}`);
+  }
   return response.json();
+  
 };
 
 export const getSingleBlog = async (token) => {
@@ -295,6 +308,40 @@ export const getAllExpResumes = async () => {
   return response.json();
 };
 
+export const createFresherResume = async (token, finalData) => {
+  const response = await fetch(`${BASE_URL}userLog/createfreshresume`, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",   
+      Authorization: `Bearer ${token}` 
+    },
+    body: JSON.stringify(finalData),
+  });
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "failed to create fresher resume");
+  }
+
+  return result;
+};
+
+export const getFresherResumeById = async (token, resumeId) => {
+  const response = await fetch(
+    `${BASE_URL}userLog/getMyfreshresumeID/${resumeId}`,
+    {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "failed to fetch fresher resume");
+  }
+
+  return result;
+};
 export const getAllFresherResumes = async () => {
   const response = await fetch(`${ADMIN_BASE_URL}allFresherresume`, {
     method: "GET",
@@ -302,3 +349,13 @@ export const getAllFresherResumes = async () => {
   return response.json();
 };
 
+export const getAllUsers = async (token) => {
+  const response = await fetch(`${ADMIN_BASE_URL}getAllUsers`, {
+    method: "GET",
+    headers: { 
+      "Content-Type": "application/json",   
+      Authorization: `Bearer ${token}` 
+    },
+  });
+  return response.json();
+};

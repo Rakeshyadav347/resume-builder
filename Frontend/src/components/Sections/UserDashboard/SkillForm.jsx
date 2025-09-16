@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Stepper from "../UserDashboard/Stepper";
 import { useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useResume } from "../UserDashboard/ResumeContext";
 function SkillForm() {
   const navigate = useNavigate();
   const [skills, setSkills] = useState([]);
@@ -13,7 +14,10 @@ function SkillForm() {
     formState: { errors },
   } = useForm();
 
+  const { resumeData, updateResumeData } = useResume();
+
   const onSubmit = (data) => {
+    updateResumeData("skills", [...(resumeData.skills || []), data]);
     console.log("Data: ", { ...data, skills });
     reset(); // clears the form fields
     setSkills([]); // reset skills
@@ -40,28 +44,32 @@ function SkillForm() {
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-2">Skill</h2>
         <p className="text-gray-600 mb-4">
-          Let’s start with the basics. To ensure employers can reach you, input at least your degree,
-          course name, and duration.
+          Let’s start with the basics. To ensure employers can reach you, input
+          at least your degree, course name, and duration.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Skill Category + Proficiency */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium">Skill Category</label>
+              <label className="block text-sm font-medium">
+                Skill Category
+              </label>
               <input
                 type="text"
-                {...register("SkillCategory")}
+                {...register("skillCategory")}
                 placeholder="Example categories: Technical, Design, Soft Skills, Tools"
                 className="w-full border rounded-lg px-3 py-2 mt-1"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Proficiency Level (Optional)</label>
+              <label className="block text-sm font-medium">
+                Proficiency Level (Optional)
+              </label>
               <input
                 type="text"
-                {...register("ProficiencyLevel")}
+                {...register("proficiency")}
                 placeholder="Beginner, Intermediate, Advanced, Expert"
                 className="w-full border rounded-lg px-3 py-2 mt-1"
               />
@@ -73,6 +81,7 @@ function SkillForm() {
             <label className="block text-sm font-medium">Skill Name</label>
             <input
               type="text"
+              {...register("skillName")}
               placeholder="Type a skill and press Enter"
               className="w-full border rounded-lg px-3 py-2 mt-1"
               onKeyDown={handleKeyDown}
@@ -101,13 +110,17 @@ function SkillForm() {
           {/* Buttons */}
           <div className="flex justify-between mt-6">
             <button
-            onClick={()=>navigate('/certificate')} 
-            type="button" className="px-4 py-2 border rounded-lg">
+              onClick={() => navigate("/certificate")}
+              type="button"
+              className="px-4 py-2 border rounded-lg"
+            >
               Previous
             </button>
             <button
-             onClick={()=>navigate('/summary')} 
-             type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+              onClick={() => navigate("/summary")}
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+            >
               Next
             </button>
           </div>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDesiredNuser,createUser,updateUser, deleteUser, createResume, getUserResumes, getResumeById , updateResume,deleteResume,googleAuth,forgotPassword,resetPassword,createFeedback,createSubscription} = require('../controllers/authUserController');
+const { getDesiredNuser,createUser,updateUser, deleteUser, createResume, getUserResumes, getResumeById , updateResume,deleteResume,googleAuth,forgotPassword,resetPassword,createFeedback,createSubscription,verifyOtp} = require('../controllers/authUserController');
 const userLogRouter=express.Router();
 const upload = require("../utils/multer");
 const {authMiddleware} = require('../middleware/authMiddleware');
@@ -8,6 +8,7 @@ const {createFresherResume,getFresherResumeById,getMyFresherResumes,updateFreshe
 
 userLogRouter.get("/google",googleAuth);
 userLogRouter.post("/forgot-password",forgotPassword);
+userLogRouter.post("/verify-otp",verifyOtp);
 userLogRouter.post("/reset-password",resetPassword);
 userLogRouter.post("/userLog",getDesiredNuser);
 userLogRouter.post("/createuser",createUser);

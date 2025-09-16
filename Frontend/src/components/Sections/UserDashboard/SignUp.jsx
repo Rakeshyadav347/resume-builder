@@ -3,7 +3,8 @@ import UserNavbar from "./UserNavbar";
 import logo from "../../../assets/logo.png";
 import previewImg from "../../../assets/editor-resume.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { registerUser } from "../../../allservices/Apiservice"; // api function import karo
+import { createAdmin, registerUser } from "../../../allservices/Apiservice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -15,7 +16,11 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const role = location.state?.role || "user";
+  console.log("Role:", role);
   // handle change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,16 +36,31 @@ export default function Signup() {
     }
     console.log(formData);
     try {
-      const response = await registerUser({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (response._id) {
-        setMessage("Signup successful ✅");
+      if (role === "admin") {
+        const response = await createAdmin({
+          adminName: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+        if (response._id) {
+          setMessage("Admin Signup successful ✅");
+          navigate("/login", { state: { role: "admin" } });
+        } else {
+          setMessage(response.message || "Signup failed ❌");
+        }
       } else {
-        setMessage(response.message || "Signup failed ❌");
+        const response = await registerUser({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (response._id) {
+          setMessage("User Signup successful ✅");
+          navigate("/login", { state: { role: "user" } });
+        } else {
+          setMessage(response.message || "Signup failed ❌");
+        }
       }
     } catch (error) {
       setMessage("Server error. Try again later.");

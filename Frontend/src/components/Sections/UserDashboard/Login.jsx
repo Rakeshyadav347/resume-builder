@@ -1,35 +1,84 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import previewImg from "../../../assets/editor-resume.png";
 import googleLogo from "../../../assets/google.png";
 import linkedinLogo from "../../../assets/linkedin.webp";
 import UserNavbar from "./UserNavbar";
-import { loginUser } from "../../../allservices/Apiservice"; // 👈 API import
+import {
+  loginUser,
+  googleAuth,
+  loginAdmin,
+} from "../../../allservices/Apiservice";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
-  const [username, setUsername] = useState(""); // 👈 backend expects username
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const role = location.state?.role || "user";
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const data = await loginUser({ username, password });
+      if (role === "admin") {
+        const data = await loginAdmin({ adminName: username, password });
 
-      // token save in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.token) {
+          localStorage.setItem("adminToken", data.token);
+          console.log("Admin Data:", data);
+          localStorage.setItem("admin", JSON.stringify(data.admin));
 
-      alert("Login successful!");
-      navigate("/choose"); // redirect after login
+          alert("Admin login successful!");
+          navigate("/admin");
+        } else {
+          setError(data.message || "Invalid admin credentials");
+        }
+      } else {
+        const data = await loginUser({ username, password });
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        alert("Login successful!");
+        navigate("/choose");
+      }
     } catch (err) {
       setError("Invalid username or password");
     }
   };
+
+  const responseGoogle = async (authResult) => {
+    try {
+      if (authResult["code"]) {
+        const result = await googleAuth(authResult.code);
+        const { email, name, image } = result.data.user;
+        const token = result.data.token;
+
+        localStorage.setItem(
+          "user-info",
+          JSON.stringify({ email, name, token, image })
+        );
+
+        navigate("/choose");
+      } else {
+        console.log(authResult);
+        throw new Error(authResult);
+      }
+    } catch (e) {
+      console.log("Error while Google Login...", e);
+    }
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: "auth-code",
+  });
 
   return (
     <div className="min-h-screen flex flex-col bg-white md:bg-gray-100">
@@ -54,7 +103,10 @@ export default function Login() {
 
               {/* Social Buttons */}
               <div className="flex gap-3 w-full mb-4">
-                <button className="flex-1 flex items-center justify-center gap-2 border rounded-md py-2 hover:bg-gray-50">
+                <button
+                  onClick={googleLogin}
+                  className="flex-1 flex items-center justify-center gap-2 border rounded-md py-2 hover:bg-gray-50"
+                >
                   <img src={googleLogo} alt="Google" className="w-5 h-5" />
                   Google
                 </button>
@@ -100,7 +152,11 @@ export default function Login() {
 
               <p className="mt-4 text-sm">
                 Don’t have an account?{" "}
-                <Link to="/signup" className="text-blue-600 cursor-pointer">
+                <Link
+                  to="/signup"
+                  state={{ role }}
+                  className="text-blue-600 cursor-pointer"
+                >
                   Sign Up
                 </Link>
               </p>

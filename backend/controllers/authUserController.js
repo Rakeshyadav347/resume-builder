@@ -405,7 +405,7 @@ exports.forgotPassword = async (req ,res ) =>{
       html: `<h2>Your OTP is ${otp}</h2><p>It will expire in 5 minutes.</p>`
     });
 
-    res.json({ message: "OTP sent to your email" });
+    res.json({ message: "OTP sent to your email" ,email: user.email});
   } catch (err) {
     console.error("Error sending OTP:", err);
     res.status(500).json({ message: "Error sending OTP",error: err.message,         
@@ -413,15 +413,42 @@ exports.forgotPassword = async (req ,res ) =>{
   }
 };
 
-exports.resetPassword = async (req ,res) =>{
-    const { email, otp, newPassword } = req.body;
+exports.verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
 
   try {
     const user = await Userauth.findOne({ email });
-
     if (!user) return res.status(404).json({ message: "User not found" });
-    if (user.otp !== otp) return res.status(400).json({ message: "Invalid OTP" });
-    if (user.otpExpires < Date.now()) return res.status(400).json({ message: "OTP expired" });
+
+    if (user.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    if (user.otpExpires < Date.now()) {
+      return res.status(400).json({ message: "OTP expired" });
+    }
+
+    
+    user.otpVerified = true;
+    await user.save();
+
+    res.json({ message: "OTP verified successfully" });
+  } catch (err) {
+    console.error("Error verifying OTP:", err);
+    res.status(500).json({ message: "Error verifying OTP" });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await Userauth.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user.otpVerified) {
+      return res.status(400).json({ message: "OTP not verified" });
+    }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
@@ -429,6 +456,8 @@ exports.resetPassword = async (req ,res) =>{
     
     user.otp = undefined;
     user.otpExpires = undefined;
+    user.otpVerified = undefined;
+
     await user.save();
 
     res.json({ message: "Password reset successfully" });
@@ -436,7 +465,8 @@ exports.resetPassword = async (req ,res) =>{
     console.error("Error resetting password:", err);
     res.status(500).json({ message: "Error resetting password" });
   }
-}
+};
+
 
 
 

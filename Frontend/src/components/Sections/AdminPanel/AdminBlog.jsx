@@ -1,61 +1,56 @@
 // src/components/Blog.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blogImg from "../../../assets/card-img.png";
-import { FaPencilAlt } from "react-icons/fa"; //  Added pen icon
-
-const blogs = [
-  {
-    id: 1,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-  {
-    id: 2,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-  {
-    id: 3,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-  {
-    id: 4,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-  {
-    id: 5,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-  {
-    id: 6,
-    title: "How to create a resume and cover letter.",
-    description: "Focus on highlighting your accomplish",
-    date: "May 14, 2025",
-    author: "Tatjana",
-    image: blogImg,
-  },
-];
+import { FaPencilAlt } from "react-icons/fa";
+import { createBlog, getAllBlogs } from "../../../allservices/Apiservice";
 
 const AdminBlog = () => {
   const [showForm, setShowForm] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem("adminToken"); // 🔑 get token
+
+  // fetch blogs
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const data = await getAllBlogs(token);
+        console.log("Fetched blogs:", data);
+        if (Array.isArray(data)) {
+          setBlogs(data);
+        } else {
+          setBlogs([]);
+        }
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+        setBlogs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (token) fetchBlogs();
+  }, [token]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    try {
+      const result = await createBlog(token, formData);
+      alert("✅ Blog created successfully!");
+      setShowForm(false);
+
+      // refresh blogs
+      const updatedBlogs = await getAllBlogs(token);
+      setBlogs(updatedBlogs);
+    } catch (err) {
+      console.error("❌ Error creating blog:", err);
+      alert("Failed to create blog");
+    }
+  };
+
+  if (loading) return <p>Loading blogs...</p>;
 
   return (
     <div className="p-6">
@@ -73,37 +68,41 @@ const AdminBlog = () => {
           </div>
 
           {/* Blog Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {blogs.map((blog, i) => (
-              <div
-                key={blog.id}
-                className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
-              >
-                <div className="relative">
-                  <img
-                    src={blog.image}
-                    alt={blog.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  {/*  Show pen icon only for first blog */}
-                  {i === 0 && (
-                    <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow hover:bg-gray-100 transition">
-                      <FaPencilAlt className="text-gray-700 text-sm" />
-                    </button>
-                  )}
+          {blogs.length === 0 ? (
+            <p className="text-gray-500">No blogs found.</p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {blogs.map((blog, i) => (
+                <div
+                  key={blog._id}
+                  className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+                >
+                  <div className="relative">
+                    <img
+                      src={blog.image || blogImg}
+                      alt={blog.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    {i === 0 && (
+                      <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow hover:bg-gray-100 transition">
+                        <FaPencilAlt className="text-gray-700 text-sm" />
+                      </button>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h2 className="font-semibold text-lg mb-1">{blog.title}</h2>
+                    <p className="text-gray-600 text-sm mb-3">
+                      {blog.description}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(blog.createdAt).toLocaleDateString()} • By{" "}
+                      {blog.author || "Admin"}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h2 className="font-semibold text-lg mb-1">{blog.title}</h2>
-                  <p className="text-gray-600 text-sm mb-3">
-                    {blog.description}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {blog.date} • By {blog.author}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </>
       ) : (
         <>
@@ -115,13 +114,14 @@ const AdminBlog = () => {
               input at least your job title, company name, and duration.
             </p>
 
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Title */}
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input
                   type="text"
-                  placeholder="eg.UI/UX Design"
+                  name="title"
+                  placeholder="eg. UI/UX Design"
                   className="w-full border rounded-md p-2 focus:ring focus:ring-blue-200"
                 />
               </div>
@@ -134,7 +134,8 @@ const AdminBlog = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter your email"
+                    name="keywords"
+                    placeholder="Enter keywords"
                     className="w-full border rounded-md p-2 focus:ring focus:ring-blue-200"
                   />
                 </div>
@@ -142,7 +143,8 @@ const AdminBlog = () => {
                   <label className="block text-sm font-medium mb-1">Slug</label>
                   <input
                     type="text"
-                    placeholder="Enter your r"
+                    name="slug"
+                    placeholder="Enter slug"
                     className="w-full border rounded-md p-2 focus:ring focus:ring-blue-200"
                   />
                 </div>
@@ -155,22 +157,26 @@ const AdminBlog = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="eg.India"
+                  name="description"
+                  placeholder="Short description"
                   className="w-full border rounded-md p-2 focus:ring focus:ring-blue-200"
                 />
               </div>
 
               {/* Content */}
               <div>
-                <label className="block text-sm font-medium mb-1">Content</label>
+                <label className="block text-sm font-medium mb-1">
+                  Content
+                </label>
                 <textarea
-                  placeholder="eg.India"
+                  name="content"
+                  placeholder="Write blog content..."
                   className="w-full border rounded-md p-2 focus:ring focus:ring-blue-200"
                   rows="5"
                 ></textarea>
               </div>
 
-              {/* Images */}
+              {/* Image */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Images
@@ -183,10 +189,15 @@ const AdminBlog = () => {
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                       <p className="text-gray-600 font-medium">Upload a File</p>
                       <p className="text-xs text-gray-500">
-                        File Upload (.pdf, .jpg, .png)
+                        File Upload (.jpg, .png)
                       </p>
                     </div>
-                    <input id="file-upload" type="file" className="hidden" />
+                    <input
+                      id="file-upload"
+                      name="image"
+                      type="file"
+                      className="hidden"
+                    />
                   </label>
                 </div>
               </div>

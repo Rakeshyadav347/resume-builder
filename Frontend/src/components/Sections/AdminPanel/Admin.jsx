@@ -1,6 +1,6 @@
 // src/components/Admin.jsx
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
   FaChartBar,
   FaUser,
@@ -16,6 +16,7 @@ import mountain from "../../../assets/card-img.png";
 const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const Admin = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex min-h-screen bg-[#f5f7ff]">
       {/* Sidebar */}
@@ -26,28 +27,49 @@ const Admin = () => {
           </div>
 
           <nav className="flex flex-col gap-4 p-6 text-gray-700">
-            <Link to="/admin" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/admin"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaChartBar /> Dashboard
             </Link>
-            <Link to="/users" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/adminusers"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaUser /> Users
             </Link>
-            <Link to="/templates" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/admintemplates"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaFileAlt /> Templates
             </Link>
-            <Link to="/blog" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/adminblog"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaBlog /> Blog
             </Link>
-            <Link to="/subscription" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/subscription"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaDollarSign /> Subscription
             </Link>
-            <Link to="/feedback" className="flex items-center gap-2 hover:text-blue-600">
+            <Link
+              to="/feedback"
+              className="flex items-center gap-2 hover:text-blue-600"
+            >
               <FaCommentDots /> Feedback
             </Link>
           </nav>
         </div>
         <div className="p-6 border-t">
-          <button className="flex items-center gap-2 text-black-500 hover:text-red-600">
+          <button
+            onClick={() => navigate("/login")}
+            className="flex items-center gap-2 text-black-500 hover:text-red-600"
+          >
             <FaSignOutAlt /> Logout
           </button>
         </div>
@@ -69,17 +91,22 @@ Admin.DashboardContent = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6">
-        {["Total User", "Total Resume", "Total Cover Letter", "Total Revenue", "Subscription User", "Blog"].map(
-          (title, i) => (
-            <div key={i} className="bg-white p-4 rounded-xl shadow">
-              <h3 className="text-gray-600">{title}</h3>
-              <div className="flex justify-between items-center mt-2">
-                <p className="text-2xl font-semibold">1,234</p>
-                <span className="text-green-500 font-medium">+10%</span>
-              </div>
+        {[
+          "Total User",
+          "Total Resume",
+          "Total Cover Letter",
+          "Total Revenue",
+          "Subscription User",
+          "Blog",
+        ].map((title, i) => (
+          <div key={i} className="bg-white p-4 rounded-xl shadow">
+            <h3 className="text-gray-600">{title}</h3>
+            <div className="flex justify-between items-center mt-2">
+              <p className="text-2xl font-semibold">1,234</p>
+              <span className="text-green-500 font-medium">+10%</span>
             </div>
-          )
-        )}
+          </div>
+        ))}
       </div>
 
       {/* Chart + Blog */}
@@ -91,7 +118,11 @@ Admin.DashboardContent = () => {
             <span className="text-gray-500 text-sm">Weekly ▼</span>
           </div>
           <div className="relative w-full h-64">
-            <img src={mountain} alt="Activity Users Graph" className="w-full h-full object-contain" />
+            <img
+              src={mountain}
+              alt="Activity Users Graph"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="flex justify-between mt-2 px-1 text-sm text-gray-600">
             {weekDays.map((day, i) => (
@@ -111,11 +142,21 @@ Admin.DashboardContent = () => {
           <div className="flex flex-col gap-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="flex gap-3">
-                <img src={harvard} alt="Blog" className="w-16 h-16 rounded-lg object-cover" />
+                <img
+                  src={harvard}
+                  alt="Blog"
+                  className="w-16 h-16 rounded-lg object-cover"
+                />
                 <div>
-                  <h4 className="font-medium text-sm">How to create a resume and cover letter.</h4>
-                  <p className="text-xs text-gray-500">Focus on highlighting your accomplishments</p>
-                  <p className="text-xs text-gray-400">May 14, 2025 · By Tatjana</p>
+                  <h4 className="font-medium text-sm">
+                    How to create a resume and cover letter.
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    Focus on highlighting your accomplishments
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    May 14, 2025 · By Tatjana
+                  </p>
                 </div>
               </div>
             ))}

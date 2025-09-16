@@ -7,16 +7,15 @@ const blogschemas = mongoose.Schema({
      },
      keywords:{
       type:String,
-      required:true,
+      
      },
      slug:{
       type:String,
-      required:true,
+      
 
      },
      description:{
       type:String,
-      required:true,
 
      },
      content:{
@@ -26,7 +25,13 @@ const blogschemas = mongoose.Schema({
      image:{
       type:String,
       required:true,
-     }
+     },
+     author: {
+      type: String,
+      default: "Admin", // fallback if no author is provided
+    },
 
-})
+},
+{ timestamps: true }
+);
 module.exports= mongoose.model("blogs",blogschemas);

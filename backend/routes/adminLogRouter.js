@@ -9,6 +9,7 @@ const upload = require("../utils/multer");
 
 adminLogRouter.post("/adminLog",authAdminController.getDesiredAdmin);
 adminLogRouter.post("/createadmin",authAdminController.createAdmin);
+adminLogRouter.get("/getAllUsers",authMiddleware,authAdminController.getAllUsers);
 adminLogRouter.get("/subscriptiondetails",authMiddleware,authAdminController.userSubscriptions);
 adminLogRouter.get("/feedbacks",authMiddleware,authAdminController.userFeedbacks);
 adminLogRouter.get("/feedbacks/:id",authMiddleware,authAdminController.SingleFeedback);

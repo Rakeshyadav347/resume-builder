@@ -2,6 +2,7 @@ import React from "react";
 import Stepper from "../UserDashboard/Stepper";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useResume } from "../UserDashboard/ResumeContext";
 
 function CertificateForm() {
   const navigate = useNavigate();
@@ -11,8 +12,15 @@ function CertificateForm() {
     formState: { errors },
   } = useForm();
 
+  const { resumeData, updateResumeData } = useResume();
+
   const onSubmit = (data) => {
+    updateResumeData("certificates", [
+      ...(resumeData.certificates || []),
+      data,
+    ]);
     console.log("Certificate Data: ", data);
+    navigate("/skills"); // navigate only after saving
   };
 
   return (
@@ -37,19 +45,27 @@ function CertificateForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="text"
-              {...register("name", { required: "Certificate name is required" })}
+              {...register("certificateName", {
+                required: "Certificate name is required",
+              })}
               placeholder="Example: Google UX Design Certificate, AWS Certified"
               className="border rounded-lg p-2 w-full"
             />
             <input
               type="text"
-              {...register("authority", { required: "Issuing authority is required" })}
+              {...register("issuingOrganization", {
+                required: "Issuing authority is required",
+              })}
               placeholder="Example: Google, Microsoft, Udemy, Coursera"
               className="border rounded-lg p-2 w-full"
             />
           </div>
-          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-          {errors.authority && <p className="text-red-500 text-sm">{errors.authority.message}</p>}
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
+          )}
+          {errors.authority && (
+            <p className="text-red-500 text-sm">{errors.authority.message}</p>
+          )}
 
           {/* Row 2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -93,14 +109,13 @@ function CertificateForm() {
           {/* Navigation Buttons */}
           <div className="flex justify-between pt-6">
             <button
-              onClick={()=>navigate("/education")}
+              onClick={() => navigate("/education")}
               type="button"
               className="border px-4 py-2 rounded-lg hover:bg-gray-100"
             >
               Previous
             </button>
             <button
-            onClick={()=>navigate("/skills")}
               type="submit"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
             >
