@@ -51,35 +51,30 @@ export default function EducationForm() {
               <input
                 {...register("fieldOfStudy")}
                 type="text"
-                name="field"
                 placeholder="Field of Study / Major"
                 className="border p-2 rounded-md w-full"
               />
               <input
                 {...register("startDate")}
                 type="date"
-                name="startDate"
                 placeholder="Start Date"
                 className="border p-2 rounded-md w-full"
               />
               <input
                 {...register("endDate")}
                 type="date"
-                name="endDate"
                 placeholder="End Date"
                 className="border p-2 rounded-md w-full"
               />
               <input
                 {...register("location")}
                 type="text"
-                name="location"
                 placeholder="Location"
                 className="border p-2 rounded-md w-full"
               />
               <input
                 {...register("grade")}
                 type="text"
-                name="grade"
                 placeholder="Grade / CGPA / Percentage"
                 className="border p-2 rounded-md w-full"
               />
@@ -88,7 +83,6 @@ export default function EducationForm() {
             {/* Honors */}
             <textarea
               {...register("honors")}
-              name="honors"
               placeholder="Honors / Achievements (Optional)"
               className="border p-2 rounded-md w-full mt-4"
             />
@@ -96,7 +90,6 @@ export default function EducationForm() {
             {/* Description */}
             <textarea
               {...register("description")}
-              name="description"
               placeholder="Description (Optional)"
               className="border p-2 rounded-md w-full mt-4"
             />
