@@ -74,6 +74,7 @@ function App() {
           <Route path="/admintemplates" element={<AdminTemplate />} />
           <Route path="/adminblog" element={<AdminBlog />} />
           <Route path="/adminusers" element={<Users />} />
+          <Route index element={<Admin.DashboardContent />} />
           <Route
             path="/actualresumepreview/:id"
             element={<ActualResumePreview />}
