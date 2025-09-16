@@ -56,7 +56,11 @@ function App() {
           <Route path="/resume-dashboard" element={<ResumeDashboard />} />
           <Route path="/select-template" element={<SelectTemplate />} />
           <Route path="/login-as" element={<LoginAs />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />}>
+            {" "}
+            <Route index element={<Admin.DashboardContent />} />
+          </Route>
+
           <Route path="/admin-blog" element={<AdminBlog />} />
           <Route path="/admin-template" element={<AdminTemplate />} />
           <Route path="/feedback" element={<Feedback />} />
@@ -74,7 +78,7 @@ function App() {
           <Route path="/admintemplates" element={<AdminTemplate />} />
           <Route path="/adminblog" element={<AdminBlog />} />
           <Route path="/adminusers" element={<Users />} />
-          <Route index element={<Admin.DashboardContent />} />
+
           <Route
             path="/actualresumepreview/:id"
             element={<ActualResumePreview />}
