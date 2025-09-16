@@ -25,7 +25,7 @@ export default function Choose() {
 
           {/* Resume Card */}
           <button
-            onClick={() => navigate("/actualresume")}
+            onClick={() => navigate("/personal-info")}
             className="bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer hover:shadow-lg transition"
           >
             <h3 className="text-2xl font-semibold mb-2">Resume</h3>
